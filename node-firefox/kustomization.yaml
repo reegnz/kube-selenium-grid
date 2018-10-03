@@ -1,0 +1,6 @@
+commonLabels:
+  component: node
+  browser: firefox
+
+resources:
+- resources/deployment.yaml

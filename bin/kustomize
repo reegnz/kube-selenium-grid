@@ -1,0 +1,24 @@
+#!/bin/bash
+#https://github.com/kubernetes-sigs/kustomize/releases
+CACHE_DIR=$HOME/.cache/bin
+KUSTOMIZE=$CACHE_DIR/kustomize
+if [ ! -f $KUSTOMIZE ]; then
+	# determine OS
+	case "`uname`" in
+	Linux*                  ) PLATFORM=linux;;
+	Darwin*                 ) PLATFORM=darwin;;
+	CYGWIN* | MINGW* | MSYS*) PLATFORM=windows;;
+	esac
+
+	mkdir -p $CACHE_DIR
+	echo 'Downloading kustomize...' >&2
+
+	curl -f -s https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest |\
+		grep "browser_download_url" |\
+		grep "$PLATFORM" |\
+		cut -d'"' -f4 |\
+		xargs -i curl -# -f -L -o "${KUSTOMIZE}.tmp" {}
+		mv "${KUSTOMIZE}.tmp" $KUSTOMIZE
+		chmod +x $KUSTOMIZE
+fi
+exec "$KUSTOMIZE" "$@"

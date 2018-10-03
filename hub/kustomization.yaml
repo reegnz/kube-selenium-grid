@@ -1,0 +1,7 @@
+commonLabels:
+  component: hub
+
+resources:
+- resources/deployment.yaml
+- resources/service.yaml
+- resources/ingress.yaml

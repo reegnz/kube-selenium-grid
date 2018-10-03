@@ -1,0 +1,12 @@
+commonLabels:
+  app: selenium-grid
+
+namespace: selenium-grid
+
+bases:
+- hub
+- node-firefox
+- node-chrome
+
+resources:
+- resources/namespace.yaml

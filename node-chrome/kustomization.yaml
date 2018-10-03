@@ -1,0 +1,6 @@
+commonLabels:
+  component: node
+  browser: chrome
+
+resources:
+- resources/deployment.yaml

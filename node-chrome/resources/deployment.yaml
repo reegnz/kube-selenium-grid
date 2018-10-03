@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: selenium-node-chrome
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: chrome
+        image: selenium/node-chrome:3.14

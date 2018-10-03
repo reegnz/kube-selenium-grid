@@ -1,0 +1,24 @@
+#!/bin/bash
+# https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-using-curl
+
+BASE_URL=https://storage.googleapis.com/kubernetes-release/release
+VERSION_URL=https://storage.googleapis.com/kubernetes-release/release/stable.txt
+CACHE_DIR=$HOME/.cache/bin
+KUBECTL=$CACHE_DIR/kubectl
+if [ ! -f $KUBECTL ]; then
+	# determine OS
+	case "`uname`" in
+	Linux*                  ) FILE_PATH=linux/amd64/kubectl;;
+	Darwin*                 ) FILE_PATH=darwin/amd64/kubectl;;
+	CYGWIN* | MINGW* | MSYS*) FILE_PATH=windows/amd64/kubectl.exe;;
+	esac
+
+	mkdir -p $CACHE_DIR
+	echo 'Downloading kubectl...' >&2
+	curl -# -f -L \
+		-o ${KUBECTL}.tmp \
+		$BASE_URL/$(curl -s $VERSION_URL)/bin/$FILE_PATH
+	mv ${KUBECTL}.tmp $KUBECTL
+	chmod +x $KUBECTL
+fi
+exec "$KUBECTL" "$@"
