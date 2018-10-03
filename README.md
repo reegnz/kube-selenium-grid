@@ -8,19 +8,22 @@ Deploying
 ---------
 To deploy selenium grid into your kubernetes cluster:
 ```
-source path.sh
-kustomize build . | kubectl apply -f
+kubectl apply -f https://raw.githubusercontent.com/reegnz/kube-selenium-grid/master/deploy/default.yaml
 ```
-
 http://selenium-hub.example.com is the example ingress address.
 
-
 http://selenium-hub.example.com/wd/hub is the url clients should connect to.
-
-
 
 Deleting
 --------
 ```
-kustomize build . | kubectl delete -f
+kubectl delete ns selenium-grid
+```
+
+Development
+-----------
+You can try out changes by piping the kustomize output directly to kubectl:
+```
+source path.sh
+kustomize build . | kubectl apply -f -
 ```
